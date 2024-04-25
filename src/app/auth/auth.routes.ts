@@ -16,10 +16,10 @@ export const AUTH_ROUTES: Routes = [
         path: 'sign-in',
         component: LoginFormComponent,
       },
-      // {
-      //   path: 'sign-up',
-      //   component: LoginFormComponent,
-      // }
+      {
+        path: 'sign-up',
+        component: LoginFormComponent,
+      }
     ]
   }
 ];

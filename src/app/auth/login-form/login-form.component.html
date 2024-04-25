@@ -1,5 +1,5 @@
-<div class="max-w-screen-sm mx-auto">
-  <h2 class="mb-6 text-2xl text-center">Ingreso {{ userType.name }}</h2>
+<div class="max-w-screen-sm mx-auto bg-white p-8 rounded-md">
+  <h2 class="mb-6 text-2xl text-center">{{ userType.name }}</h2>
   <form (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
     <div class="flex flex-col gap-1">
       <label for="username">Email</label>
@@ -27,8 +27,17 @@
         autocomplete="on"
       />
     </div>
-    <button type="submit" class="bg-orange-600 py-2 px-3 rounded-md text-white">
-      Ingresar
+    <button
+      type="submit"
+      class="bg-orange-600 hover:bg-orange-500 py-2 px-3 rounded-md text-white my-4"
+    >
+      {{ userType.name.includes("Ingreso") ? "Ingresar" : "Registrarse" }}
     </button>
   </form>
+  <p class="text-center" href="">
+    ¿No tienes cuenta?
+    <a class="underline cursor-pointer text-orange-600" (click)="goToRegister()"
+      >Regístrate</a
+    >
+  </p>
 </div>
