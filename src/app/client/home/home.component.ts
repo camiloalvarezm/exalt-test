@@ -6,15 +6,16 @@ import { addNewProduct } from '../../store/actions/product.actions';
 import { Product } from '../../core/models/product.model';
 import { AppState } from '../../store';
 import { ProductService } from '../../api/product.service';
+import { HeaderComponent } from '../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, HeaderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   products: Product[] = [];
 
   constructor(
@@ -27,9 +28,9 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(products => {
+    this.productService.getProducts().subscribe((products) => {
       this.products = products;
-      console.log(this.products)
+      console.log(this.products);
     });
   }
 

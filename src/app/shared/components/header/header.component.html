@@ -1,1 +1,27 @@
-<p>header works!</p>
+<header
+  class="sticky top-0 z-10 h-24 flex justify-between px-3 md:px-10 bg-orange-200"
+>
+  <img
+    class="w-40 md:w-56"
+    src="../../../../assets/icons/food-store-logo.svg"
+    alt="food-store"
+  />
+  <!-- <nav class="flex flex-row justify-center">
+    <li>Productos</li>
+    <li>Administrar</li>
+    <li></li>
+  </nav> -->
+  <div class="flex flex-row gap-4 md:gap-10 items-center text-green-800">
+    <a class="cursor-pointer">
+      <fa-icon [icon]="faCartShopping" [size]="'xl'" class="mr-2"></fa-icon>
+      <span
+        class="fixed rounded-full bg-orange-600 p-1.5 text-white text-xs -ml-5 -mt-5 animate-bounce"
+        >20</span
+      >Carrito
+    </a>
+    <a class="cursor-pointer"
+      ><fa-icon [icon]="faRightFromBracket" [size]="'xl'" class="mr-2"></fa-icon
+      >salir</a
+    >
+  </div>
+</header>
