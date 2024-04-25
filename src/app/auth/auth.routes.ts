@@ -13,14 +13,15 @@ export const AUTH_ROUTES: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-  },
-  {
-    path: 'login/clients',
-    component: LoginClientsComponent,
-  },
-  {
-    path: 'login/admin',
-    component: LoginAdminComponent,
-  },
-  { path: '**', component: PageNotFoundComponent }
+    children: [
+      {
+        path: 'client',
+        component: LoginClientsComponent,
+      },
+      {
+        path: 'admin',
+        component: LoginAdminComponent
+      },
+    ]
+  }
 ];

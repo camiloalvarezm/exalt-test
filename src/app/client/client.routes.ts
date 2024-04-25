@@ -3,13 +3,22 @@ import { HomeComponent } from './home/home.component';
 
 export const CLIENT_ROUTES: Routes = [
   {
-    path: '/client',
-    redirectTo: '/client/home',
-    pathMatch: 'full',
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
   {
-    path: '/client/home',
+    path: 'home',
     component: HomeComponent,
-    pathMatch: 'full',
-  },
+    // children: [
+    //   {
+    //     path: 'client',
+    //     component: LoginClientsComponent,
+    //   },
+    //   {
+    //     path: 'admin',
+    //     component: LoginAdminComponent
+    //   },
+    // ]
+  }
 ];
