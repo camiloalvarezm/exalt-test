@@ -1,0 +1,34 @@
+<div class="max-w-screen-sm mx-auto">
+  <h2 class="mb-6 text-2xl text-center">Ingreso {{ userType.name }}</h2>
+  <form (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+    <div class="flex flex-col gap-1">
+      <label for="username">Email</label>
+      <input
+        [(ngModel)]="formData.email"
+        type="email"
+        class="border-2 border-orange-600 py-2 px-3 rounded-md focus:outline-none"
+        id="email"
+        name="email"
+        placeholder="Ingrese su email"
+        required
+        autocomplete="on"
+      />
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="password">Contraseña</label>
+      <input
+        [(ngModel)]="formData.password"
+        type="password"
+        class="border-2 border-orange-600 focus:outline-none py-2 px-3 rounded-md"
+        id="password"
+        name="password"
+        placeholder="Ingrese su contraseña"
+        required
+        autocomplete="on"
+      />
+    </div>
+    <button type="submit" class="bg-orange-600 py-2 px-3 rounded-md text-white">
+      Ingresar
+    </button>
+  </form>
+</div>

@@ -1,27 +1,25 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { LoginClientsComponent } from './login-clients/login-clients.component';
-import { LoginAdminComponent } from './login-admin/login-admin.component';
-import { PageNotFoundComponent } from '../shared/components/page-not-found/page-not-found.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 export const AUTH_ROUTES: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
-    path: 'login',
+    path: 'auth',
     component: LoginComponent,
     children: [
       {
-        path: 'client',
-        component: LoginClientsComponent,
+        path: 'sign-in',
+        component: LoginFormComponent,
       },
-      {
-        path: 'admin',
-        component: LoginAdminComponent
-      },
+      // {
+      //   path: 'sign-up',
+      //   component: LoginFormComponent,
+      // }
     ]
   }
 ];

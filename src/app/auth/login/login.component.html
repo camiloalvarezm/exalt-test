@@ -1,7 +1,29 @@
-<p>Welcome to Store</p>
+<div
+  class="flex flex-col gap-10 min-h-full border-red-600 max-w-screen-2xl mx-auto p-10"
+>
+  <div class="flex flex-col items-center">
+    <h1 class="my-5 text-5xl">Food Store</h1>
+    <img
+      class="w-40 md:w-60"
+      src="../../../assets/icons/store.svg"
+      alt="store-logo"
+    />
+  </div>
 
-<button>Login as Client</button>
-<button>Login as Admin</button>
+  <div class="flex flex-col lg:flex-row justify-center gap-4">
+    <button
+      (click)="login({ id: 0, name: 'Cliente' })"
+      class="bg-orange-600 rounded-md lg:w-64 text-white px-5 py-2 hover:bg-orange-400"
+    >
+      Ingreso cliente
+    </button>
+    <button
+      (click)="login({ id: 1, name: 'Administrador' })"
+      class="bg-orange-600 rounded-md lg:w-64 text-white px-5 py-2 hover:bg-orange-400"
+    >
+      Ingreso administrador
+    </button>
+  </div>
 
-<router-outlet></router-outlet>
-
+  <router-outlet></router-outlet>
+</div>
