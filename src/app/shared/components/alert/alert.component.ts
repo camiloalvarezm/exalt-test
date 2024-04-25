@@ -12,16 +12,17 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 })
 export class AlertComponent implements OnInit {
   @Input() message!: string;
-  @Input() type!: string;
+  @Input() typeAlert!: string;
+  @Input() showAlert: boolean = false;
+
   public messageColors!: string;
   public faCircleXmark = faCircleXmark;
-  public showAlert = true;
 
   constructor() {}
 
   ngOnInit(): void {
     this.messageColors =
-      this.type === 'error'
+      this.typeAlert === 'error'
         ? 'border-red-600 bg-red-200 text-red-600'
         : 'border-green-600 bg-green-200 text-green-600';
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
-import { UserType } from '../../core/models/user-type';
+import { UserType } from '../../core/models/user-type.model';
 
 @Component({
   selector: 'app-login',
