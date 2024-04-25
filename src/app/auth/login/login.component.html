@@ -1,8 +1,8 @@
 <div
-  class="flex flex-col gap-10 min-h-full max-w-screen-2xl mx-auto p-5 lg:p-10"
+  class="flex flex-col gap-10 min-h-full max-w-screen-2xl mx-auto p-6 md:p-10"
 >
   <div class="flex flex-col items-center">
-    <img class="w-50 md:w-96" src="../../../assets/icons/food-store-logo.svg" />
+    <img class="w-96" src="../../../assets/icons/food-store-logo.svg" />
     <img
       class="w-40 md:w-60"
       src="../../../assets/icons/store.svg"
@@ -10,16 +10,16 @@
     />
   </div>
 
-  <div class="flex flex-col lg:flex-row justify-center gap-4">
+  <div class="flex flex-col md:flex-row justify-center gap-4">
     <button
       (click)="login({ id: 0, name: 'Ingreso Cliente' })"
-      class="bg-green-800 rounded-md lg:w-64 text-white px-5 py-2 hover:bg-green-700"
+      class="bg-green-800 rounded-md md:w-64 text-white px-5 py-2 hover:bg-green-700"
     >
       Ingreso cliente
     </button>
     <button
       (click)="login({ id: 1, name: 'Ingreso Administrador' })"
-      class="bg-green-800 rounded-md lg:w-64 text-white px-5 py-2 hover:bg-green-700"
+      class="bg-green-800 rounded-md md:w-64 text-white px-5 py-2 hover:bg-green-700"
     >
       Ingreso administrador
     </button>

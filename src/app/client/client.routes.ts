@@ -5,20 +5,10 @@ export const CLIENT_ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
     component: HomeComponent,
-    // children: [
-    //   {
-    //     path: 'client',
-    //     component: LoginClientsComponent,
-    //   },
-    //   {
-    //     path: 'admin',
-    //     component: LoginAdminComponent
-    //   },
-    // ]
-  }
+  },
 ];
