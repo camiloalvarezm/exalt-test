@@ -1,4 +1,5 @@
-<div class="max-w-screen-sm mx-auto bg-white p-8 rounded-md">
+<div class="max-w-screen-sm mx-auto bg-white p-4 lg:p-8 rounded-2xl">
+  <app-alert [message]="'Error al iniciar sesion'" [type]="'success'"></app-alert>
   <h2 class="mb-6 text-2xl text-center">{{ userType.name }}</h2>
   <form (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
     <div class="flex flex-col gap-1">
@@ -6,7 +7,7 @@
       <input
         [(ngModel)]="formData.email"
         type="email"
-        class="border-2 border-orange-600 py-2 px-3 rounded-md focus:outline-none"
+        class="border-2 border-green-800 py-2 px-3 rounded-md focus:outline-none"
         id="email"
         name="email"
         placeholder="Ingrese su email"
@@ -19,7 +20,7 @@
       <input
         [(ngModel)]="formData.password"
         type="password"
-        class="border-2 border-orange-600 focus:outline-none py-2 px-3 rounded-md"
+        class="border-2 border-green-800 focus:outline-none py-2 px-3 rounded-md"
         id="password"
         name="password"
         placeholder="Ingrese su contraseña"
@@ -29,7 +30,7 @@
     </div>
     <button
       type="submit"
-      class="bg-orange-600 hover:bg-orange-500 py-2 px-3 rounded-md text-white my-4"
+      class="bg-green-800 hover:bg-green-700 py-2 px-3 rounded-md text-white my-4"
     >
       {{ userType.name.includes("Ingreso") ? "Ingresar" : "Registrarse" }}
     </button>

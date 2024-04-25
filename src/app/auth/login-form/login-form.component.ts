@@ -3,11 +3,12 @@ import { UserType } from '../../core/models/user-type';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertComponent } from '../../shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-login-clients',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, AlertComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })

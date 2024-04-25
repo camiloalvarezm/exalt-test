@@ -1,0 +1,13 @@
+@if (showAlert) {
+<div
+  class="flex flex-row justify-between px-5 py-3 my-2 border-2 rounded-lg"
+  [ngClass]="messageColors"
+>
+  <p>{{ message }}</p>
+  <fa-icon
+    [icon]="faCircleXmark"
+    class="cursor-pointer"
+    (click)="onClose()"
+  ></fa-icon>
+</div>
+}
