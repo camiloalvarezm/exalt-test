@@ -11,17 +11,30 @@
     <li>Administrar</li>
     <li></li>
   </nav> -->
-  <div class="flex flex-row gap-4 md:gap-10 items-center text-green-800">
+  <div class="flex flex-row gap-6 md:gap-10 items-center text-green-800">
+    @if(showCart) {
     <a class="cursor-pointer">
       <fa-icon [icon]="faCartShopping" [size]="'xl'" class="mr-2"></fa-icon>
       <span
         class="fixed rounded-full bg-orange-600 py-1.5 px-2.5 text-white text-xs -ml-4 -mt-4 animate-bounce"
         >2</span
-      >Carrito
+      ><span class="hidden md:inline">Carrito</span>
     </a>
+    } @if (userRole == '1' && !showDashboard) {
+    <a (click)="goToDashboard()" class="cursor-pointer"
+      ><fa-icon [icon]="faGauge" [size]="'xl'" class="mr-2"></fa-icon
+      ><span class="hidden md:inline">Dashboard</span></a
+    >
+    } @else if (userRole == '1') {
+    <a (click)="goToStore()" class="cursor-pointer"
+      ><fa-icon [icon]="faStore" [size]="'xl'" class="mr-2"></fa-icon
+      ><span class="hidden md:inline">Tienda</span></a
+    >
+    }
+
     <a (click)="signOut()" class="cursor-pointer"
       ><fa-icon [icon]="faRightFromBracket" [size]="'xl'" class="mr-2"></fa-icon
-      >salir</a
+      ><span class="hidden md:inline">Salir</span></a
     >
   </div>
 </header>
