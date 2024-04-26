@@ -30,12 +30,16 @@ export class LoginFormComponent implements OnInit {
     this.activateRoute.queryParams.subscribe((params: any) => {
       this.userType = params;
     });
-    this.userService.getClientUsers().subscribe((res: any) => {
-      localStorage.setItem('clients', JSON.stringify(res));
-    });
-    this.userService.getAdminUsers().subscribe((res: any) => {
-      localStorage.setItem('admins', JSON.stringify(res));
-    });
+    if (!localStorage.getItem('clients')) {
+      this.userService.getClientUsers().subscribe((res: any) => {
+        localStorage.setItem('clients', JSON.stringify(res));
+      });
+    }
+    if (!localStorage.getItem('admins')) {
+      this.userService.getAdminUsers().subscribe((res: any) => {
+        localStorage.setItem('admins', JSON.stringify(res));
+      });
+    }
   }
 
   onSubmit(): void {
@@ -46,20 +50,36 @@ export class LoginFormComponent implements OnInit {
     }
     if (this.userType.id == 0) {
       const clients = JSON.parse(localStorage.getItem('clients') || '[]');
-      const user = this.findUser(clients);
-      if (user) {
-        this.storageToken(0);
-        this.router.navigateByUrl('client/home');
+      if (this.userType.name.includes('Ingreso')) {
+        const user = this.findUser(clients);
+        if (user) {
+          this.storageToken(0);
+          this.router.navigateByUrl('client/home');
+        }
+        return;
       }
+      clients.push(this.formData);
+      localStorage.setItem('clients', JSON.stringify(clients));
+      this.router.navigate(['/auth/sign-in'], {
+        queryParams: { id: 0, name: 'Ingreso Cliente' },
+      });
       return;
     }
     if (this.userType.id == 1) {
-      const admins = JSON.parse(localStorage.getItem('clients') || '[]');
-      const user = this.findUser(admins);
-      if (user) {
-        this.storageToken(1);
-        this.router.navigateByUrl('admin/dashboard');
+      const admins = JSON.parse(localStorage.getItem('admins') || '[]');
+      if (this.userType.name.includes('Ingreso')) {
+        const user = this.findUser(admins);
+        if (user) {
+          this.storageToken(1);
+          this.router.navigateByUrl('admin/dashboard');
+        }
+        return;
       }
+      admins.push(this.formData);
+      localStorage.setItem('admins', JSON.stringify(admins));
+      this.router.navigate(['/auth/sign-in'], {
+        queryParams: { id: 1, name: 'Ingreso Administrador' },
+      });
       return;
     }
   }
@@ -80,7 +100,7 @@ export class LoginFormComponent implements OnInit {
   goToRegister(): void {
     this.router.navigate(['auth/sign-up'], {
       queryParams: {
-        id: 0,
+        id: this.userType.id,
         name: this.userType.name.includes('Cliente')
           ? 'Registro Cliente'
           : 'Registro Administrador',
