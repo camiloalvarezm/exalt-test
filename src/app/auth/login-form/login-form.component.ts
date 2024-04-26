@@ -3,13 +3,13 @@ import { UserType } from '../../core/models/user-type.model';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertComponent } from '../../shared/components/alert/alert.component';
-import { AltertMessage } from '../../core/models/alert-message.model';
+import { UserService } from '../../api/user.service';
+import { User } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-login-clients',
   standalone: true,
-  imports: [FormsModule, AlertComponent],
+  imports: [FormsModule],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })
@@ -19,13 +19,12 @@ export class LoginFormComponent implements OnInit {
     email: '',
     password: '',
   };
-  public alertMessage: AltertMessage = {
-    message: '',
-    typeAlert: 'success',
-  };
-  public showAlert = false
 
-  constructor(private activateRoute: ActivatedRoute, private router: Router) {}
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((params: any) => {
@@ -34,7 +33,43 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.formData);
+    if (this.formData.email == '' || this.formData.password == '') {
+      console.log('complete todos los campos');
+      return;
+    }
+    if (this.userType.id == 0) {
+      this.userService.getClientUsers().subscribe((res: any) => {
+        const user = this.findUser(res);
+        if (user) {
+          this.storageToken(0);
+          this.router.navigateByUrl('client/home');
+        }
+      });
+      return;
+    }
+    if (this.userType.id == 1) {
+      this.userService.getAdminUsers().subscribe((res: any) => {
+        const user = this.findUser(res);
+        if (user) {
+          this.storageToken(1);
+          this.router.navigateByUrl('admin/dashboard');
+        }
+      });
+      return;
+    }
+  }
+
+  findUser(users: User[]): User | undefined {
+    return users.find(
+      (user: User) =>
+        user.email === this.formData.email &&
+        user.password === this.formData.password
+    );
+  }
+
+  storageToken(userId: number) {
+    localStorage.setItem('role', userId == 0 ? '0' : '1');
+    localStorage.setItem('token', 'true');
   }
 
   goToRegister(): void {

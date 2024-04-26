@@ -6,7 +6,7 @@ export const AUTH_ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'auth',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'auth',
@@ -19,7 +19,7 @@ export const AUTH_ROUTES: Routes = [
       {
         path: 'sign-up',
         component: LoginFormComponent,
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
