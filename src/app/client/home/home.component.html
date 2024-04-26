@@ -1,3 +1,4 @@
+<app-loader [show]="showLoader"></app-loader>
 <app-header></app-header>
 <div
   class="max-w-screen-xl mx-auto mt-5 :mt-10 flex flex-row flex-wrap md:gap-8 justify-center"
@@ -8,7 +9,8 @@
   >
     <img
       class="w-20 h-20 self-center"
-      [src]="imagePath + product.id + '.jpg'"
+      [src]="getImagePath(product.id)"
+      (error)="handleImageError($event)"
       [alt]="product.name"
     />
     <h5 class="text-center text-xl font-bold">{{ product.name }}</h5>
@@ -30,7 +32,7 @@
     </div>
     <span class="text-sm text-center">{{ product.stock }} disponibles</span>
     <button
-      (click)="addProduct(product)"
+      (click)="addProductToCart(product)"
       class="p-1 bg-green-800 hover:bg-green-700 text-white rounded-md"
     >
       <fa-icon [icon]="faCartPlus" [size]="'sm'" class="mr-2"></fa-icon>Agregar

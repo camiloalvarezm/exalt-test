@@ -1,5 +1,5 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { ProductService } from '../../api/product.service';
 import { Product } from '../../core/models/product.model';
@@ -9,6 +9,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,17 +40,23 @@ export class DashboardComponent implements OnInit {
     stock: 0,
     quantity: 0,
   };
-  constructor(private productService: ProductService) {}
+  public productService = inject(ProductService);
+  public toastr = inject(ToastrService);
+  public showLoader = true;
 
   ngOnInit(): void {
-    if (!localStorage.getItem('products')) {
-      this.productService.getProducts().subscribe((res) => {
-        this.products = res;
-        localStorage.setItem('products', JSON.stringify(this.products));
-      });
-      return;
-    }
-    this.products = JSON.parse(localStorage.getItem('products') || '[]');
+    this.showLoader = true;
+    setTimeout(() => {
+      if (!localStorage.getItem('products')) {
+        this.productService.getProducts().subscribe((res) => {
+          this.products = res;
+          localStorage.setItem('products', JSON.stringify(this.products));
+        });
+        return;
+      }
+      this.products = JSON.parse(localStorage.getItem('products') || '[]');
+      this.showLoader = false;
+    }, 1500);
   }
 
   addNewProduct() {
@@ -77,11 +84,20 @@ export class DashboardComponent implements OnInit {
       localStorage.getItem('products') || '[]'
     );
     event.id = (products.length + 1).toString();
+    event.quantity = 1;
     if (this.action == 'add') {
       products.unshift(event);
       localStorage.setItem('products', JSON.stringify(products));
       this.products = products;
+      this.toastr.success(
+        'El producto se ha agregado correctamente.',
+        'Producto agregado'
+      );
     } else if (this.action == 'edit') {
+      this.toastr.success(
+        'El producto se ha actualizado correctamente.',
+        'Producto actualizado'
+      );
     }
   }
 }

@@ -1,4 +1,4 @@
-<app-loader></app-loader>
+<app-loader [show]="showLoader"></app-loader>
 <app-modal [action]="action" [show]="showModal" [formData]="editProductData" (closeModal)="closeModal($event)" (productData)="storeProduct($event)"></app-modal>
 <app-header></app-header>
 <div

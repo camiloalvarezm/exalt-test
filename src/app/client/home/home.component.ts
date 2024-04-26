@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -13,6 +13,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
     HeaderComponent,
     FormsModule,
     FontAwesomeModule,
+    LoaderComponent,
   ],
   providers: [CurrencyPipe],
   templateUrl: './home.component.html',
@@ -32,38 +34,35 @@ export class HomeComponent implements OnInit {
   public products: Product[] = [];
   public faCartPlus = faCartPlus;
   public imagePath: string;
+  public showLoader = false;
+  public productService = inject(ProductService);
 
-  constructor(
-    private store: Store<AppState>,
-    private productService: ProductService
-  ) {
-    this.store.select('products').subscribe(({ products }: any) => {
-      this.products = products;
-      console.log('lo que llega del store', JSON.stringify(products))
-    });
+  constructor() {
     this.imagePath = '../../../assets/product-images/';
   }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((products) => {
-      this.store.dispatch(addAllProducts({ products }));
-      this.products = products
-      console.log('lo que llega del servicio', products);
-    });
+    this.showLoader = true;
+    setTimeout(() => {
+      if (!localStorage.getItem('products')) {
+        this.productService.getProducts().subscribe((products) => {
+          this.products = products;
+          console.log('lo que llega del servicio', products);
+        });
+      } else {
+        this.products = JSON.parse(localStorage.getItem('products') || '[]');
+      }
+      this.showLoader = false;
+    }, 1500);
   }
 
-  addProduct(product: Product) {
-    this.store.dispatch(
-      addNewProduct({
-        product: {
-          id: '',
-          name: '',
-          description: '',
-          price: 12,
-          stock: 1,
-          quantity: 0,
-        },
-      })
-    );
+  getImagePath(productId: string): string {
+    return this.imagePath + productId + '.jpg';
   }
+
+  handleImageError(event: any) {
+    event.target.src = this.imagePath + 'default.jpg';
+  }
+
+  addProductToCart(product: Product) {}
 }
