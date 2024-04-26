@@ -4,11 +4,15 @@ import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
 import { reducers, metaReducers } from './store';
 import { HttpClientModule } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore(reducers, { metaReducers }),
     importProvidersFrom(HttpClientModule),
+    provideAnimations(),
+    provideToastr(),
   ],
 };
