@@ -1,18 +1,40 @@
 <app-header></app-header>
 <div
-  class="max-w-screen-xl mx-auto mt-10 flex flex-row flex-wrap md:gap-10 justify-center"
+  class="max-w-screen-xl mx-auto mt-5 :mt-10 flex flex-row flex-wrap md:gap-8 justify-center"
 >
   @for (product of products; track product.id) {
   <div
     class="p-5 min-w-44 max-w-44 border border-slate-200 md:border-none md:shadow-2xl min-h-80 max-h-80 bg-white md:rounded-lg flex flex-col justify-between"
   >
-    <img class="h-16 max-w-full" src="../../../assets/icons/store.svg" alt="" />
-    <h5 class="text-center">{{ product.name }}</h5>
+    <img
+      class="w-20 h-20 self-center"
+      [src]="imagePath + product.id + '.jpg'"
+      [alt]="product.name"
+    />
+    <h5 class="text-center text-xl font-bold">{{ product.name }}</h5>
     <p class="text-sm-fs">{{ product.description }}</p>
-    <span>Precio: {{ product.price | currency }}</span>
-    <span>Stock: {{ product.stock }}</span>
-    <input type="number" placeholder="0" [(ngModel)]="product.stock">
-    
+    <span class="w-full font-bold text-center text-md">{{
+      product.price | currency : "COP"
+    }}</span>
+    <div class="flex flex-row text-sm justify-between items-center">
+      <label for="cantidad">Cantidad: </label>
+      <input
+        class="border max-w-12 rounded-md p-1 text-sm"
+        type="number"
+        placeholder="0"
+        [(ngModel)]="product.quantity"
+        id="cantidad"
+        min="0"
+        [max]="product.stock"
+      />
+    </div>
+    <span class="text-sm text-center">{{ product.stock }} disponibles</span>
+    <button
+      (click)="addProduct(product)"
+      class="p-1 bg-green-800 hover:bg-green-700 text-white rounded-md"
+    >
+      <fa-icon [icon]="faCartPlus" [size]="'sm'" class="mr-2"></fa-icon>Agregar
+    </button>
   </div>
   } @empty {
   <p class="p-4">No existen productos.</p>

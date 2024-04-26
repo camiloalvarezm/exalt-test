@@ -1,6 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { Product } from '../../core/models/product.model';
 
+export const addAllProducts = createAction(
+  '[Products Component] AddNewProduct',
+  props<{ products: Product[] }>()
+);
 export const addNewProduct = createAction(
   '[Products Component] AddNewProduct',
   props<{ product: Product }>()

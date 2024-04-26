@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { addNewProduct } from '../../store/actions/product.actions';
+import {
+  addAllProducts,
+  addNewProduct,
+} from '../../store/actions/product.actions';
 import { Product } from '../../core/models/product.model';
 import { AppState } from '../../store';
 import { ProductService } from '../../api/product.service';
@@ -26,29 +29,40 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  products: Product[] = [];
+  public products: Product[] = [];
+  public faCartPlus = faCartPlus;
+  public imagePath: string;
 
   constructor(
     private store: Store<AppState>,
-    private productService: ProductService,
-    private currencyPipe: CurrencyPipe
+    private productService: ProductService
   ) {
-    this.store.select('products').subscribe((products: any) => {
-      this.products = [];
+    this.store.select('products').subscribe(({ products }: any) => {
+      this.products = products;
+      console.log('lo que llega del store', JSON.stringify(products))
     });
+    this.imagePath = '../../../assets/product-images/';
   }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe((products) => {
-      this.products = products;
-      console.log(this.products);
+      this.store.dispatch(addAllProducts({ products }));
+      this.products = products
+      console.log('lo que llega del servicio', products);
     });
   }
 
-  addProduct() {
+  addProduct(product: Product) {
     this.store.dispatch(
       addNewProduct({
-        product: { id: '', name: '', description: '', price: 12, stock: 1 },
+        product: {
+          id: '',
+          name: '',
+          description: '',
+          price: 12,
+          stock: 1,
+          quantity: 0,
+        },
       })
     );
   }

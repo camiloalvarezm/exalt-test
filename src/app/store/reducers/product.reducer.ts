@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import {
+  addAllProducts,
   addNewProduct,
   deleteProduct,
   updateProduct,
@@ -15,6 +16,10 @@ export const initialState: ProductState = {
 
 export const productsReducer = createReducer(
   initialState,
+  on(addAllProducts, (state, { products }) => ({
+    ...state,
+    products: products,
+  })),
   on(addNewProduct, (state, { product }) => ({
     ...state,
     products: [...state.products, product],
