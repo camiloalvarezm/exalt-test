@@ -30,31 +30,36 @@ export class LoginFormComponent implements OnInit {
     this.activateRoute.queryParams.subscribe((params: any) => {
       this.userType = params;
     });
+    this.userService.getClientUsers().subscribe((res: any) => {
+      localStorage.setItem('clients', JSON.stringify(res));
+    });
+    this.userService.getAdminUsers().subscribe((res: any) => {
+      localStorage.setItem('admins', JSON.stringify(res));
+    });
   }
 
   onSubmit(): void {
+    console.log(this.userType);
     if (this.formData.email == '' || this.formData.password == '') {
       console.log('complete todos los campos');
       return;
     }
     if (this.userType.id == 0) {
-      this.userService.getClientUsers().subscribe((res: any) => {
-        const user = this.findUser(res);
-        if (user) {
-          this.storageToken(0);
-          this.router.navigateByUrl('client/home');
-        }
-      });
+      const clients = JSON.parse(localStorage.getItem('clients') || '[]');
+      const user = this.findUser(clients);
+      if (user) {
+        this.storageToken(0);
+        this.router.navigateByUrl('client/home');
+      }
       return;
     }
     if (this.userType.id == 1) {
-      this.userService.getAdminUsers().subscribe((res: any) => {
-        const user = this.findUser(res);
-        if (user) {
-          this.storageToken(1);
-          this.router.navigateByUrl('admin/dashboard');
-        }
-      });
+      const admins = JSON.parse(localStorage.getItem('clients') || '[]');
+      const user = this.findUser(admins);
+      if (user) {
+        this.storageToken(1);
+        this.router.navigateByUrl('admin/dashboard');
+      }
       return;
     }
   }

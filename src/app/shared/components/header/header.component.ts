@@ -29,7 +29,8 @@ export class HeaderComponent {
   }
 
   signOut() {
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
     this.router.navigateByUrl('/auth');
   }
 
