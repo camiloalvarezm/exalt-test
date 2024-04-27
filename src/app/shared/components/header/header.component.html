@@ -8,7 +8,7 @@
   />
   <div class="flex flex-row gap-6 md:gap-10 items-center text-green-800">
     @if(showCart) {
-    <a class="cursor-pointer">
+    <a (click)="openCart()" class="cursor-pointer">
       <fa-icon [icon]="faCartShopping" [size]="'xl'" class="mr-2"></fa-icon>
       <span
         class="fixed rounded-full bg-orange-600 py-1.5 px-2.5 text-white text-xs -ml-4 -mt-4"

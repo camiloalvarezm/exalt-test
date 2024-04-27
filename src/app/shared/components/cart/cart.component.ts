@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '../../../core/models/product.model';
@@ -16,11 +16,13 @@ import { ToastrService } from 'ngx-toastr';
 export class CartComponent {
   @Input() products: Product[] = [];
   @Input() show: boolean = false;
+  @Output() closeCartEvent = new EventEmitter<boolean>();
   public faCircleXmark = faCircleXmark;
   public toastr = inject(ToastrService);
 
   onClose() {
     this.show = false;
+    this.closeCartEvent.emit(false);
   }
 
   getImage(path: string) {
@@ -41,5 +43,6 @@ export class CartComponent {
       'Compra exitosa'
     );
     this.onClose();
+    localStorage.removeItem('cart');
   }
 }

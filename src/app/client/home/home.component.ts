@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
   public productService = inject(ProductService);
   public toastr = inject(ToastrService);
   public cartItems: Product[] = [];
+  public showCart = false;
 
   constructor() {
     this.imagePath = '../../../assets/product-images/';
@@ -72,5 +73,12 @@ export class HomeComponent implements OnInit {
       'Producto agregado'
     );
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
+  }
+
+  showCartEvent(event: boolean) {
+    this.showCart = event;
+    if (!event) {
+      this.cartItems = [];
+    }
   }
 }

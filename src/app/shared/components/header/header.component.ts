@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,7 @@ import { faStore } from '@fortawesome/free-solid-svg-icons';
 })
 export class HeaderComponent {
   @Input() cartItems: number = 0;
+  @Output() showCartEvent = new EventEmitter<boolean>()
   public faCartShopping = faCartShopping;
   public faRightFromBracket = faRightFromBracket;
   public faGauge = faGauge;
@@ -41,5 +42,9 @@ export class HeaderComponent {
 
   goToStore() {
     this.router.navigateByUrl('/client/home');
+  }
+
+  openCart() {
+    this.showCartEvent.emit(true)
   }
 }
