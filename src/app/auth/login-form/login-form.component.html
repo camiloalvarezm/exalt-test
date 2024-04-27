@@ -37,15 +37,18 @@
     </div>
     <button
       type="submit"
-      class="bg-green-800 hover:bg-green-700 py-2 px-3 rounded-md text-white my-4"
+      class="bg-green-800 hover:bg-green-700 py-2 px-3 rounded-md text-white mt-4"
     >
       {{ userType.name.includes("Ingreso") ? "Ingresar" : "Registrarse" }}
     </button>
   </form>
-  <p class="text-center" href="">
+  @if (!userType.name.includes('Registro')) {
+  <p class="text-center mt-4">
     ¿No tienes cuenta?
     <a class="underline cursor-pointer text-orange-600" (click)="goToRegister()"
       >Regístrate</a
     >
   </p>
+
+  }
 </div>

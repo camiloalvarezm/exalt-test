@@ -82,6 +82,15 @@ export class LoginFormComponent implements OnInit {
           this.showLoader = false;
           return;
         }
+        const userExist = this.userExists(clients);
+        if (userExist) {
+          this.toastr.error(
+            'El email ya se encuentra registrado en el sistema. Intente con otro, o inicie sesión.',
+            'Error'
+          );
+          this.showLoader = false;
+          return;
+        }
         clients.push(this.formData);
         localStorage.setItem('clients', JSON.stringify(clients));
         this.router.navigate(['/auth/sign-in'], {
@@ -107,6 +116,15 @@ export class LoginFormComponent implements OnInit {
           this.showLoader = false;
           return;
         }
+        const userExist = this.userExists(admins);
+        if (userExist) {
+          this.toastr.error(
+            'El email ya se encuentra registrado en el sistema. Intente con otro, o inicie sesión.',
+            'Error'
+          );
+          this.showLoader = false;
+          return;
+        }
         admins.push(this.formData);
         localStorage.setItem('admins', JSON.stringify(admins));
         this.router.navigate(['/auth/sign-in'], {
@@ -128,6 +146,10 @@ export class LoginFormComponent implements OnInit {
         user.email === this.formData.email &&
         user.password === this.formData.password
     );
+  }
+
+  userExists(users: User[]): User | undefined {
+    return users.find((user: User) => this.formData.email === user.email);
   }
 
   storageToken(userId: number) {
