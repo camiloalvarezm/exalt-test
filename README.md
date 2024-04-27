@@ -1,27 +1,31 @@
 # FoodStore
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.5.
+This project was created with Angular version 17.3.5.
 
-## Development server
+## User Access
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+If you don't want to register, you can access with a client user using:
+email: `cliente@gmail.com` password: `123456`
 
-## Code scaffolding
+Or you can access with a admin user using:
+email: `admin@gmail.com` password: `123456`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tools used
 
-## Build
+- Tailwind CSS
+- MyJSONServer fake API REST
+- NGX Toastr
+- Animate.css
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Install dependencies
 
-## Running unit tests
+Run `npm install` to install all necesary dependencies.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Run local
 
-## Running end-to-end tests
+Run `ng serve` to create a local server and explore the project.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Deploy
 
-## Further help
+You can see live app at [Food Store](https://food-store-exalt.netlify.app/).
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
