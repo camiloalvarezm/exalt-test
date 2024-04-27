@@ -59,7 +59,6 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.userType);
     if (this.formData.email == '' || this.formData.password == '') {
       this.showValidations = true;
       setTimeout(() => {

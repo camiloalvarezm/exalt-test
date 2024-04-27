@@ -6,12 +6,12 @@
     src="../../../../assets/icons/food-store-logo.svg"
     alt="food-store"
   />
-  <div class="flex flex-row gap-6 md:gap-10 items-center text-green-800">
+  <div class="relative flex flex-row gap-6 md:gap-10 items-center text-green-800">
     @if(showCart) {
     <a (click)="openCart()" class="cursor-pointer">
       <fa-icon [icon]="faCartShopping" [size]="'xl'" class="mr-2"></fa-icon>
       <span
-        class="fixed rounded-full bg-orange-600 py-1.5 px-2.5 text-white text-xs -ml-4 -mt-4"
+        class="absolute rounded-full bg-orange-600 py-1.5 px-2.5 text-white text-xs -ml-4 -mt-4"
         [class]="{ 'animate-bounce': cartItems > 0 }"
         >{{ cartItems }}</span
       ><span class="hidden md:inline">Carrito</span>
