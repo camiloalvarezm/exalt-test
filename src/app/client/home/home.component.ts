@@ -67,7 +67,12 @@ export class HomeComponent implements OnInit {
   }
 
   addProductToCart(product: Product) {
-    this.cartItems.push(product);
+    const index = this.productExist(product);
+    if (index >= 0) {
+      this.cartItems[index].quantity += product.quantity;
+    } else {
+      this.cartItems.push(product);
+    }
     this.toastr.success(
       `Has agregado ${product.quantity} unidades de ${product.name}`,
       'Producto agregado'
@@ -75,9 +80,13 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
   }
 
+  productExist(product: Product): number {
+    return this.cartItems.findIndex((p: Product) => p.id === product.id);
+  }
+
   showCartEvent(event: boolean) {
     this.showCart = event;
-    if (!event) {
+    if (!localStorage.getItem('cart')) {
       this.cartItems = [];
     }
   }

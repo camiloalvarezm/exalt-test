@@ -80,6 +80,7 @@ export class DashboardComponent implements OnInit {
   deleteProduct(id: string) {
     this.products = this.products.filter((product) => product.id !== id);
     localStorage.setItem('products', JSON.stringify(this.products));
+    this.toastr.success('El producto se ha eliminado correctamente.', 'Producto eliminado')
   }
 
   closeModal(event: boolean) {
