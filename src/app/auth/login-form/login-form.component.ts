@@ -24,8 +24,9 @@ export class LoginFormComponent implements OnInit {
   public activateRoute = inject(ActivatedRoute);
   public router = inject(Router);
   public userService = inject(UserService);
-  public toaster = inject(ToastrService);
+  public toastr = inject(ToastrService);
   public showLoader = false;
+  public showValidations = false;
 
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((params: any) => {
@@ -33,16 +34,26 @@ export class LoginFormComponent implements OnInit {
     });
     this.showLoader = true;
     if (!localStorage.getItem('clients')) {
-      this.userService.getClientUsers().subscribe((res: any) => {
-        localStorage.setItem('clients', JSON.stringify(res));
-        this.showLoader = false;
+      this.userService.getClientUsers().subscribe({
+        next: (res: any) => {
+          localStorage.setItem('clients', JSON.stringify(res));
+        },
+        error: (error) => {
+          this.toastr.error('Algo salió mal, intente más tarde.', 'Error');
+        },
       });
+      this.showLoader = false;
     }
     if (!localStorage.getItem('admins')) {
-      this.userService.getAdminUsers().subscribe((res: any) => {
-        localStorage.setItem('admins', JSON.stringify(res));
-        this.showLoader = false;
+      this.userService.getAdminUsers().subscribe({
+        next: (res: any) => {
+          localStorage.setItem('admins', JSON.stringify(res));
+        },
+        error: (error) => {
+          this.toastr.error('Algo salió mal, intente más tarde.', 'Error');
+        },
       });
+      this.showLoader = false;
     }
     this.showLoader = false;
   }
@@ -50,7 +61,10 @@ export class LoginFormComponent implements OnInit {
   onSubmit(): void {
     console.log(this.userType);
     if (this.formData.email == '' || this.formData.password == '') {
-      console.log('complete todos los campos');
+      this.showValidations = true;
+      setTimeout(() => {
+        this.showValidations = false;
+      }, 3000);
       return;
     }
     this.showLoader = true;
@@ -63,7 +77,7 @@ export class LoginFormComponent implements OnInit {
             this.storageToken(0);
             this.router.navigateByUrl('client/home');
           } else {
-            this.toaster.error('Email o contraseña incorrecta.', 'Error');
+            this.toastr.error('Email o contraseña incorrecta.', 'Error');
           }
           this.showLoader = false;
           return;
@@ -74,7 +88,7 @@ export class LoginFormComponent implements OnInit {
           queryParams: { id: 0, name: 'Ingreso Cliente' },
         });
         this.showLoader = false;
-        this.toaster.success(
+        this.toastr.success(
           'El usuario ha sido registrado existosamente.',
           'Cliente creado'
         );
@@ -88,7 +102,7 @@ export class LoginFormComponent implements OnInit {
             this.storageToken(1);
             this.router.navigateByUrl('admin/dashboard');
           } else {
-            this.toaster.error('Email o contraseña incorrecta.', 'Error');
+            this.toastr.error('Email o contraseña incorrecta.', 'Error');
           }
           this.showLoader = false;
           return;
@@ -98,7 +112,7 @@ export class LoginFormComponent implements OnInit {
         this.router.navigate(['/auth/sign-in'], {
           queryParams: { id: 1, name: 'Ingreso Administrador' },
         });
-        this.toaster.success(
+        this.toastr.success(
           'El usuario ha sido registrado existosamente.',
           'Administrador creado'
         );

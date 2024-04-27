@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit {
     price: 0,
     stock: 0,
     quantity: 0,
+    imgPath: 'default',
   };
   public productService = inject(ProductService);
   public toastr = inject(ToastrService);
@@ -48,10 +49,16 @@ export class DashboardComponent implements OnInit {
     this.showLoader = true;
     setTimeout(() => {
       if (!localStorage.getItem('products')) {
-        this.productService.getProducts().subscribe((res) => {
-          this.products = res;
-          localStorage.setItem('products', JSON.stringify(this.products));
+        this.productService.getProducts().subscribe({
+          next: (res) => {
+            this.products = res;
+            localStorage.setItem('products', JSON.stringify(this.products));
+          },
+          error: (error) => {
+            this.toastr.error('Algo salío mal, intente más tarde.', 'Error');
+          },
         });
+        this.showLoader = false;
         return;
       }
       this.products = JSON.parse(localStorage.getItem('products') || '[]');
@@ -71,7 +78,8 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteProduct(id: string) {
-    console.log('eliminar', id);
+    this.products = this.products.filter((product) => product.id !== id);
+    localStorage.setItem('products', JSON.stringify(this.products));
   }
 
   closeModal(event: boolean) {
@@ -79,25 +87,26 @@ export class DashboardComponent implements OnInit {
   }
 
   storeProduct(event: Product) {
-    console.log('producto a guardar', event);
-    const products: Product[] = JSON.parse(
-      localStorage.getItem('products') || '[]'
-    );
-    event.id = (products.length + 1).toString();
+    event.id = (this.products.length + 1).toString();
     event.quantity = 1;
     if (this.action == 'add') {
-      products.unshift(event);
-      localStorage.setItem('products', JSON.stringify(products));
-      this.products = products;
+      this.products.unshift(event);
       this.toastr.success(
         'El producto se ha agregado correctamente.',
         'Producto agregado'
       );
     } else if (this.action == 'edit') {
+      this.products = this.products.map((p) => {
+        if (p.id === event.id) {
+          return { ...event };
+        }
+        return p;
+      });
       this.toastr.success(
         'El producto se ha actualizado correctamente.',
         'Producto actualizado'
       );
     }
+    localStorage.setItem('products', JSON.stringify(this.products));
   }
 }

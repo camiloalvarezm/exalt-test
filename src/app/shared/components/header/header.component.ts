@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,7 @@ import { faStore } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  @Input() cartItems: number = 0;
   public faCartShopping = faCartShopping;
   public faRightFromBracket = faRightFromBracket;
   public faGauge = faGauge;

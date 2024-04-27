@@ -4,5 +4,6 @@ export interface Product {
     description: string,
     price: number,
     stock: number,
-    quantity: number
+    quantity: number,
+    imgPath: string
 }

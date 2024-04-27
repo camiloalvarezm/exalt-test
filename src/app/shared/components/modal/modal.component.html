@@ -10,8 +10,15 @@
       (click)="onClose()"
     ></fa-icon>
     <h4 class="text-center text-green-800 text-xl font-bold">
-      {{ action === 'edit' ? 'Editar' : 'Agregar' }} Producto
+      {{ action === "edit" ? "Editar" : "Agregar" }} Producto
     </h4>
+    @if (showValidations) {
+      <div
+        class="bg-red-200 border-2 border-red-700 text-red-700 px-4 py-2 rounded-md my-2"
+      >
+        <p><span class="font-bold">Error:</span> Complete todos los campos. El precio y la cantidad deben ser mayor a cero.</p>
+      </div>
+      }
     <form (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
       <div class="flex flex-col gap-1">
         <label for="username">Nombre</label>
@@ -41,33 +48,38 @@
       </div>
       <div class="flex flex-col md:flex-row gap-3">
         <div class="flex flex-col gap-1 flex-1">
-            <label for="price">Precio</label>
-            <input
-              [(ngModel)]="formData.price"
-              type="number"
-              class="border-2 border-green-800 py-2 px-3 rounded-md focus:outline-none"
-              id="price"
-              name="price"
-              required
-              autocomplete="on"
-            />
-          </div>
-          <div class="flex flex-col gap-1 flex-1">
-            <label for="stock">Cantidad</label>
-            <input
-              [(ngModel)]="formData.stock"
-              type="number"
-              class="border-2 border-green-800 py-2 px-3 rounded-md focus:outline-none"
-              id="stock"
-              name="stock"
-              required
-              autocomplete="on"
-            />
-          </div>
+          <label for="price">Precio</label>
+          <input
+            [(ngModel)]="formData.price"
+            type="number"
+            class="border-2 border-green-800 py-2 px-3 rounded-md focus:outline-none"
+            id="price"
+            name="price"
+            required
+            autocomplete="on"
+          />
+        </div>
+        <div class="flex flex-col gap-1 flex-1">
+          <label for="stock">Cantidad</label>
+          <input
+            [(ngModel)]="formData.stock"
+            type="number"
+            class="border-2 border-green-800 py-2 px-3 rounded-md focus:outline-none"
+            id="stock"
+            name="stock"
+            required
+            autocomplete="on"
+          />
+        </div>
       </div>
-      <div class="flex flex-row flex-wrap gap-3 text-white mt-4">
-        <button (click)="onClose()" class="px-2 py-3 bg-slate-500 hover:bg-slate-400 rounded-md flex-1">Cancelar</button>
-        <button type="submit" class="px-2 py-3 bg-green-800 hover:bg-green-700 rounded-md flex-1 ">{{ action === 'edit' ? 'Actualizar' : 'Agregar' }}</button>
+      <div class="flex flex-row flex-wrap gap-3 text-white mt-6">
+        <button
+          type="submit"
+          class="px-2 py-3 bg-green-800 hover:bg-green-700 rounded-md flex-1"
+        >
+          {{ action === "edit" ? "Actualizar" : "Agregar" }}
+        </button>
+        <!-- <button (click)="onClose()" class="px-2 py-3 bg-slate-500 hover:bg-slate-400 rounded-md flex-1">Cancelar</button> -->
       </div>
     </form>
   </div>

@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -36,6 +37,8 @@ export class HomeComponent implements OnInit {
   public imagePath: string;
   public showLoader = false;
   public productService = inject(ProductService);
+  public toastr = inject(ToastrService);
+  public cartItems: Product[] = [];
 
   constructor() {
     this.imagePath = '../../../assets/product-images/';
@@ -56,13 +59,19 @@ export class HomeComponent implements OnInit {
     }, 1500);
   }
 
-  getImagePath(productId: string): string {
-    return this.imagePath + productId + '.jpg';
+  getImagePath(imgPath: string): string {
+    return this.imagePath + imgPath + '.jpg';
   }
 
   handleImageError(event: any) {
     event.target.src = this.imagePath + 'default.jpg';
   }
 
-  addProductToCart(product: Product) {}
+  addProductToCart(product: Product) {
+    this.cartItems.push(product);
+    this.toastr.success(
+      `Has agregado ${product.quantity} unidades de ${product.name}`,
+      'Producto agregado'
+    );
+  }
 }

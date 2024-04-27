@@ -1,5 +1,5 @@
 <app-loader [show]="showLoader"></app-loader>
-<app-header></app-header>
+<app-header [cartItems]="cartItems.length"></app-header>
 <div
   class="max-w-screen-xl mx-auto mt-5 :mt-10 flex flex-row flex-wrap md:gap-8 justify-center"
 >
@@ -9,7 +9,7 @@
   >
     <img
       class="w-20 h-20 self-center"
-      [src]="getImagePath(product.id)"
+      [src]="getImagePath(product.imgPath)"
       (error)="handleImageError($event)"
       [alt]="product.name"
     />

@@ -22,10 +22,12 @@ export class ModalComponent {
     price: 0,
     stock: 0,
     quantity: 0,
+    imgPath: 'default',
   };
   @Output() closeModal = new EventEmitter<boolean>();
   @Output() productData = new EventEmitter<any>();
   public faCircleXmark = faCircleXmark;
+  public showValidations = false;
 
   onClose() {
     this.show = false;
@@ -37,10 +39,23 @@ export class ModalComponent {
       price: 0,
       stock: 0,
       quantity: 0,
+      imgPath: 'default',
     };
   }
 
   onSubmit() {
+    if (
+      this.formData.name === '' ||
+      this.formData.description === '' ||
+      this.formData.price == 0 ||
+      this.formData.stock == 0
+    ) {
+      this.showValidations = true;
+      setTimeout(() => {
+        this.showValidations = false;
+      }, 4000);
+      return;
+    }
     this.productData.emit(this.formData);
     this.onClose();
   }
