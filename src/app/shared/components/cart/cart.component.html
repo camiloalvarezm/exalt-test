@@ -1,0 +1,47 @@
+@if (show) {
+<div
+  class="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-black bg-opacity-80"
+>
+  <div
+    class="w-full h-full lg:w-1/3 lg:self-end bg-orange-200 flex flex-col p-5"
+  >
+    <div class="self-end">
+      <fa-icon
+        [icon]="faCircleXmark"
+        class="cursor-pointer text-green-800"
+        [size]="'xl'"
+        (click)="onClose()"
+      ></fa-icon>
+    </div>
+    <div>
+      <h1
+        class="text-green-800 text-2xl mx-4 my-4 font-bold text-center"
+      >
+        Carrito de compras
+      </h1>
+      @for (product of products; track $index) {
+      <div class="bg-white rounded-md p-5 mb-1 flex flex-row justify-between">
+        <div>
+          <img
+            class="w-20"
+            [src]="getImage(product.imgPath)"
+            alt=""
+          />
+        </div>
+        <div class="text-right">
+          <p class="font-bold">{{ product.name }}</p>
+          <p>{{ product.quantity }} unidades</p>
+          <p>{{ product.price | currency : "COP" }} por unidad</p>
+        </div>
+      </div>
+      } @empty {
+        <h1>Carrito vacío.</h1>
+      }
+    </div>
+    <button (click)="buyCart()" class="bg-green-800 hover:bg-green-700 text-white py-3 px-2 rounded-md my-5">
+      Comprar carrito
+      <span>{{ totalCart() | currency: 'COP' }}</span>
+    </button>
+  </div>
+</div>
+}

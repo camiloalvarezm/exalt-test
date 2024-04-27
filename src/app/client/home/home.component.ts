@@ -1,13 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { Store } from '@ngrx/store';
-import {
-  addAllProducts,
-  addNewProduct,
-} from '../../store/actions/product.actions';
 import { Product } from '../../core/models/product.model';
-import { AppState } from '../../store';
 import { ProductService } from '../../api/product.service';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { ToastrService } from 'ngx-toastr';
+import { CartComponent } from '../../shared/components/cart/cart.component';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
     FormsModule,
     FontAwesomeModule,
     LoaderComponent,
+    CartComponent,
   ],
   providers: [CurrencyPipe],
   templateUrl: './home.component.html',
@@ -50,13 +46,15 @@ export class HomeComponent implements OnInit {
       if (!localStorage.getItem('products')) {
         this.productService.getProducts().subscribe((products) => {
           this.products = products;
-          console.log('lo que llega del servicio', products);
         });
       } else {
         this.products = JSON.parse(localStorage.getItem('products') || '[]');
       }
       this.showLoader = false;
     }, 1500);
+    if (localStorage.getItem('cart')) {
+      this.cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+    }
   }
 
   getImagePath(imgPath: string): string {
@@ -73,5 +71,6 @@ export class HomeComponent implements OnInit {
       `Has agregado ${product.quantity} unidades de ${product.name}`,
       'Producto agregado'
     );
+    localStorage.setItem('cart', JSON.stringify(this.cartItems));
   }
 }
